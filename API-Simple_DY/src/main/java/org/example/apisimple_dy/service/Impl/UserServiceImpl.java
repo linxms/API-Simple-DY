@@ -1,5 +1,6 @@
 package org.example.apisimple_dy.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,11 +8,12 @@ import org.example.apisimple_dy.config.JWTUtil;
 import org.example.apisimple_dy.entity.User;
 import org.example.apisimple_dy.mapper.UserMapper;
 import org.example.apisimple_dy.service.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     JWTUtil jwtUtil;
@@ -58,21 +60,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean addUser(User user) throws RuntimeException {
-        return false;
+        try {
+            if (this.baseMapper.selectById(user.getId()) == null){
+                save(user);
+                return true;
+            } else {
+                throw new RuntimeException("该用户已存在");
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override
     public boolean modify(User user) throws RuntimeException {
-        return false;
+        try {
+            int i = this.baseMapper.updateById(user);
+            if(i<1) {
+                throw new RuntimeException("更新异常");
+            }
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override
     public boolean delete(Integer id) throws RuntimeException {
-        return false;
+        try {
+            int i = this.baseMapper.deleteById(id);
+            if(i<1) {
+                throw new RuntimeException("更新异常");
+            }
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override
     public IPage<User> selectPage(Page<User> page, User user) throws RuntimeException {
-        return null;
+        try {
+            LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
+            wrapper.like(user.getId()!=null,User::getId,user.getId())
+                    .like(user.getName()!=null,User::getName,user.getName())
+                    .like(user.getRole()!=null,User::getRole,user.getRole());
+            IPage<User> pages= this.baseMapper.selectPage(page,wrapper);
+            if(pages==null){
+                throw new RuntimeException("未知异常");
+            }
+            return pages;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

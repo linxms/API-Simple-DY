@@ -17,4 +17,7 @@ public interface UserService extends IService<User>{
     boolean delete(Integer id) throws RuntimeException;
 
     IPage<User> selectPage(Page<User> page, User user) throws RuntimeException;
+
+    interface VideoService {
+    }
 }
