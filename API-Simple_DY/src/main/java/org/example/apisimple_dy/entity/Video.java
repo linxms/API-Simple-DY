@@ -13,15 +13,20 @@ public class Video {
 
     private String content;
 
-    @TableField(value = "filelocation")
-    private String file_location;
+    private String videoPath;
 
     private Integer likes;
 
     private String title;
 
-    public Video(Integer authorID, String file_location){
+    private String picturePath;
+
+    public Video(Integer authorID, String videoPath){
         this.authorID = authorID;
-        this.file_location = file_location;
+        this.videoPath = videoPath;
+    }
+
+    public Video(Integer authorID){
+        this.authorID = authorID;
     }
 }

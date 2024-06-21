@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface VideoService extends IService<Video> {
-    boolean videoUpload(MultipartFile uploadVideo, Video video) throws IOException;
+    boolean videoUpload(MultipartFile[] uploadFiles, Video video) throws IOException;
 
     boolean deleteVideo(Integer userID, Integer videoID);
 
-    IPage<Video> selectMyVideo(Page<Video> videoPage, Video video);
+    IPage<Video> selectMyVideo(Page<Video> videoPage, Integer authorID);
 
 }
