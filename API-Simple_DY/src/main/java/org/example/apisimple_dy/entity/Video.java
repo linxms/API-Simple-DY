@@ -1,5 +1,6 @@
 package org.example.apisimple_dy.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class Video {
+    @TableId(value = "videoID")
     private Integer videoID;
 
     private Integer authorID;
