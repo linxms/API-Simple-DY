@@ -16,7 +16,34 @@ mlgb的，前端快动！！！！
 数据库设计：
 三张表 ：User、Video、Browse
 
+**User表**
 
+| 字段名 | 类型 | 是否必需 | 键 | 字段描述 |
+| ---- | ---- | ---- | ---- | ---- |
+| id   | int  | 是 | 主键 | 账号，用于唯一识别 |
+| name | varchar(255) | 是 |  | 用户名 |
+| password| varchar(255) | 是 |  | 密码 |
+| phone | varchar(255) | 否 | | 电话号码 |
+| role | int | 是 |  | 角色 |
+
+**Video表**
+
+| 字段名 | 类型 | 是否必需 | 键 | 字段描述 |
+| ---- | ---- | ---- |---- | ---- |
+| videoID   | int  | 是   | 主键 | 视频号，用于唯一识别 |
+| authorID | int |是 | 外键(User中的id) | 创作者账号 |
+| content | varchar(255) | 是 |  | 视频简介 |
+| videoPath | varchar(255) | 否 |  | 视频存放地址 |
+| likes | int | 是 |  | 点赞数 |
+| title | varchar(255) | 否 |  | 标题 |
+
+**Browse表**
+| 字段名 | 类型 | 是否必需 | 键 | 字段描述 |
+| ---- | ---- | ---- |---- | ---- |
+| videoID   | int  | 是   | 外键(Video中的videoID) | 视频号 |
+| userID   | int  | 是 | 外键(User中的id) | 用户账号 |
+| isLiked| int | 是 |  | 是否点赞 |
+| content | varchar(255) | 否 |  | 评论 |
 
 ## 接口文档
 
