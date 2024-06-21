@@ -62,7 +62,7 @@ mlgb的，前端快动！！！！
 
 * 接口类型: `POST`
 * 参数类型: 
-    * @PathVariable Integer userID
+    * @RequestParam("userID") Integer userID
 * 返还参数:
     * 成功:
         * 状态码(code): 200
@@ -78,7 +78,7 @@ mlgb的，前端快动！！！！
 
 * 接口类型: `GET`
 * 参数类型: 
-    * @PathVariable Integer userID
+    * @RequestParam("userID") Integer userID
 * 返还参数:
     * 成功:
         * 状态码(code): 200
@@ -114,8 +114,8 @@ mlgb的，前端快动！！！！
 
 * 接口类型: `POST`
 * 参数类型: 
-    * @PathVariable Integer authorID
-    * @PathVariable Integer videoID
+    * @RequestParam("authorID") Integer authorID
+    * @RequestParam("videoID") Integer videoID
 * 返还参数:
     * 成功:
         * 状态码(code): 200
@@ -151,7 +151,7 @@ mlgb的，前端快动！！！！
 
 * 接口类型: `GET`
 * 参数类型: 
-    * @PathVariable Integer userID
+    * @RequestParam("userID") Integer userID
 * 返还参数:
     * 成功:
         * 状态码(code): 200
@@ -184,7 +184,7 @@ mlgb的，前端快动！！！！
 * 接口类型: `POST`
 * 参数类型: 
     * @RequestBody Video video
-    * @PathVariable Integer userID
+    * @RequestParam("userID") Integer userID
 * 返还参数:
     * 成功:
         * 状态码(code): 200

@@ -44,7 +44,7 @@ public class VideoController {
     }
 
     @PostMapping("/deleteVideo")
-    public Result<?> deleteVideo(@PathVariable Integer authorID, @PathVariable Integer videoID){
+    public Result<?> deleteVideo(@RequestParam("authorID") Integer authorID, @RequestParam("videoID") Integer videoID){
         try {
             videoService.deleteVideo(authorID, videoID);
             return Result.success();

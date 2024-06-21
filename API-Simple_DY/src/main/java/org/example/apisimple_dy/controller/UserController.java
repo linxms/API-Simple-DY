@@ -71,7 +71,7 @@ public class UserController {
      * @return 一个user对象，里面存放了对应的信息
      */
     @GetMapping("/getUser")
-    public Result<?> getUser(@PathVariable Integer userID){
+    public Result<?> getUser(@RequestParam("userID") Integer userID){
         try {
             User user = userService.getById(userID);
             if (user==null)
@@ -83,7 +83,7 @@ public class UserController {
     }
 
     @PostMapping("/deleteUser")
-    public Result<?> deleteUser(@PathVariable Integer userID){
+    public Result<?> deleteUser(@RequestParam("userID") Integer userID){
         try {
             userService.delete(userID);
             return Result.success();

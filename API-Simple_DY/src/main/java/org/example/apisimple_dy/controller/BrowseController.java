@@ -15,7 +15,7 @@ public class BrowseController {
     private BrowseService browseService;
 
     @PostMapping("/putLikes")
-    public Result<?> putLikes(@RequestBody Video video, @PathVariable Integer userID){
+    public Result<?> putLikes(@RequestBody Video video, @RequestParam("userID") Integer userID){
         if (video.getVideoID() == null){
             throw new RuntimeException("数据不能为空");
         }
@@ -33,7 +33,7 @@ public class BrowseController {
     }
 
     @GetMapping("/videoCommand")
-    public Result<?> getCommandVideos(@PathVariable Integer userID){
+    public Result<?> getCommandVideos(@RequestParam("userID") Integer userID){
         try {
             return Result.success(browseService.videoCommand(userID));
         } catch (Exception e) {
