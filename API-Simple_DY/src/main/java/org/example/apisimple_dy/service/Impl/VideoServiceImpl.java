@@ -21,9 +21,9 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
     }
     @Override
-    public boolean videoUpload(MultipartFile[] uploadFiles, Video video) throws IOException {
+    public boolean videoUpload(MultipartFile uploadFile, Video video) throws IOException {
 
-        if (uploadFiles.length == 0){
+        if (uploadFile.isEmpty()){
             throw new RuntimeException("上传文件不能为空");
         }
         String dirPath = "C:\\Users\\林\\Desktop\\大三下\\Api\\第4次作业-简易抖音\\Videos\\" +
@@ -36,13 +36,13 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         }
 
         try {
-            String videoName = uploadFiles[0].getOriginalFilename();
+            String videoName = uploadFile.getOriginalFilename();
 
             File videoServer = new File(dir, videoName);
 
             //System.out.println("真实路径：" + fileServer.getAbsolutePath());
 
-            uploadFiles[0].transferTo(videoServer);
+            uploadFile.transferTo(videoServer);
 
             video.setVideoPath(videoServer.getAbsolutePath());
             int videoNum = this.baseMapper.getFIleNum(video.getAuthorID(), videoServer.getAbsolutePath());
@@ -77,6 +77,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     }
 
     /**
+     *
+     *
      * 本函数主要是分页查询一位author的全部视频作品
      * @param videoPage 用于分页查询
      * @param authorID 用于查询

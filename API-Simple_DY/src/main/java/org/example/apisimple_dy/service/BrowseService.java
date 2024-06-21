@@ -6,9 +6,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.apisimple_dy.entity.Browse;
 import org.example.apisimple_dy.entity.Video;
 
+import java.util.List;
+
 public interface BrowseService extends IService<Browse> {
-    public IPage<Video> VideoCommand(Page<Video> videoPage);
+    public int likesOn(Video video, Integer userID);
 
-    public int likesOn(Video video, Browse browse);
+    public List<Video> videoCommand(Integer userID);
 
+    public boolean browseVideo(Browse browse);
 }

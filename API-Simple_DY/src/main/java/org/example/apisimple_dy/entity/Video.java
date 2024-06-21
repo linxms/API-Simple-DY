@@ -19,8 +19,6 @@ public class Video {
 
     private String title;
 
-    private String picturePath;
-
     public Video(Integer authorID, String videoPath){
         this.authorID = authorID;
         this.videoPath = videoPath;

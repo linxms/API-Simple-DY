@@ -8,7 +8,7 @@ public class Browse {
 
     private Integer userID;
 
-    private boolean isBrowsed;
+    private Integer isLiked;
 
     private String content;
 }
