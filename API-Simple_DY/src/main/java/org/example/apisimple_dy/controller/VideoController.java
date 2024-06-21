@@ -18,7 +18,7 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/addVideo")
-    public Result<?> addVideo(@RequestParam("file")MultipartFile videoFile, Video video){
+    public Result<?> addVideo(@RequestParam("file")MultipartFile videoFile, @RequestBody Video video){
         if (video.getAuthorID() == null){
             throw new RuntimeException("数据不能为空");
         }
