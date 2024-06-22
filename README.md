@@ -38,12 +38,28 @@ mlgb的，前端快动！！！！
 | title | varchar(255) | 否 |  | 标题 |
 
 **Browse表**
+
 | 字段名 | 类型 | 是否必需 | 键 | 字段描述 |
 | ---- | ---- | ---- |---- | ---- |
 | videoID   | int  | 是   | 外键(Video中的videoID) | 视频号 |
 | userID   | int  | 是 | 外键(User中的id) | 用户账号 |
 | isLiked| int | 是 |  | 是否点赞 |
 | content | varchar(255) | 否 |  | 评论 |
+
+**ChatHistory表**
+
+| 字段名    | 类型         | 是否必需 | 键               | 字段描述   |
+| --------- | ------------ | -------- | ---------------- | ---------- |
+| id        | bigint       | 是       | 主键             | 记录ID     |
+| userID    | int          | 是       | 外键(User中的id) | 用户账号   |
+| listID    | varchar(255) | 是       |                  | chat列表ID |
+| role      | varchar(10)  | 是       |                  | 身份       |
+| content   | text         | 是       |                  | 会话内容   |
+| timestamp | timestamp    | 是       |                  | 时间戳     |
+
+## 
+
+
 
 ## 接口文档
 
@@ -212,6 +228,7 @@ mlgb的，前端快动！！！！
 ### Browse模块 /browse
 
 **推荐视频**（/videoCommand）
+
 > 说明：按照点赞数从高到低来推荐视频
 
 * 接口类型: `GET`
@@ -244,6 +261,7 @@ mlgb的，前端快动！！！！
         * 数据(data): null
 
 **点赞视频**（/putLikes）
+
 > 说明：对浏览视频进行点赞，已点赞过的视频无法再次点赞
 
 * 接口类型: `POST`
@@ -263,3 +281,44 @@ mlgb的，前端快动！！！！
         * 状态码(code): 20001
         * 信息(messgae): 视频已经点赞
         * 数据(data): null
+
+### Chat模块 /chat
+
+**获得回复**（/）
+
+> 说明：获取一次Chat回复
+
+* 接口类型: `POST`
+* 参数类型: 
+  * @RequestParam("userID") Integer userId
+  * @RequestBody ChatRequest chatRequest
+
+返还参数:
+
+* 成功:
+  * 状态码(code): 200
+  * 信息(message): success
+  * 数据(data): content
+* 失败:
+  * 状态码(code): 20001
+  * 信息(messgae): 异常
+  * 数据(data): null
+
+**获得上下文聊天列表**（/list）
+
+> 说明：获取用户所有的会话列表及其内容
+
+* 接口类型: `GET`
+* 参数类型: 
+  * @RequestParam("userID") Integer userId
+
+返还参数:
+
+* 成功:
+  * 状态码(code): 200
+  * 信息(message): success
+  * 数据(data): ChatListResponse
+* 失败:
+  * 状态码(code): 20001
+  * 信息(messgae): 异常
+  * 数据(data): null
