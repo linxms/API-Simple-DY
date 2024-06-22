@@ -32,7 +32,7 @@ mlgb的，前端快动！！！！
 | ---- | ---- | ---- |---- | ---- |
 | videoID   | int  | 是   | 主键 | 视频号，用于唯一识别 |
 | authorID | int |是 | 外键(User中的id) | 创作者账号 |
-| content | varchar(255) | 是 |  | 视频简介 |
+| content | varchar(255) | 否 |  | 视频简介 |
 | videoPath | varchar(255) | 否 |  | 视频存放地址 |
 | likes | int | 是 |  | 点赞数 |
 | title | varchar(255) | 否 |  | 标题 |
@@ -48,6 +48,44 @@ mlgb的，前端快动！！！！
 ## 接口文档
 
 * 接口主要分为User、Video、Browse三个模块
+
+**返回Body**
+
+*User*
+```JAVA
+{
+    Integer userID,
+    String name,
+    String password,
+    String phone,
+    Integer role;
+
+}
+```
+
+*Video*
+
+```JAVA
+{
+    Integer videoID,
+    Integer authorID,
+    String content,
+    String videoPath,
+    Integer likes,
+    String title;
+}
+```
+
+*Browse*
+
+```JAVA
+{
+    Integer videoID,
+    Integer userID,
+    Integer isLiked,
+    String content;
+}
+```
 
 ### User模块: /user
 
