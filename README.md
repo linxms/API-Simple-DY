@@ -125,14 +125,14 @@ mlgb的，前端快动！！！！
 **注销** （/deleteUser）
 > 说明：注销自己的账号
 
-* 接口类型: `POST`
+* 接口类型: `DELETE`
 * 参数类型: 
     * @RequestParam("userID") Integer userID
 * 返还参数:
     * 成功:
         * 状态码(code): 200
         * 信息(message): success
-        * 数据(data): null
+        * 数据(data): data(包含token和user对象)
     * 失败:
         * 状态码(code): 20001
         * 信息(messgae): 失败
@@ -177,7 +177,7 @@ mlgb的，前端快动！！！！
 **删除视频**（/deleteVideo）
 > 说明：用户删除自己的视频
 
-* 接口类型: `POST`
+* 接口类型: `DELETE`
 * 参数类型: 
     * @RequestParam("authorID") Integer authorID
     * @RequestParam("videoID") Integer videoID
