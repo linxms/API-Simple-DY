@@ -82,7 +82,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/deleteUser")
+    @DeleteMapping("/deleteUser")
     public Result<?> deleteUser(@RequestParam("userID") Integer userID){
         try {
             userService.delete(userID);

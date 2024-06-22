@@ -18,7 +18,7 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/addVideo")
-    public Result<?> addVideo(@RequestParam("file")MultipartFile videoFile, @RequestBody Video video){
+    public Result<?> addVideo(@RequestBody MultipartFile videoFile, @RequestBody Video video){
         if (video.getAuthorID() == null){
             throw new RuntimeException("数据不能为空");
         }
@@ -43,7 +43,7 @@ public class VideoController {
         }
     }
 
-    @PostMapping("/deleteVideo")
+    @DeleteMapping("/deleteVideo")
     public Result<?> deleteVideo(@RequestParam("authorID") Integer authorID, @RequestParam("videoID") Integer videoID){
         try {
             videoService.deleteVideo(authorID, videoID);
