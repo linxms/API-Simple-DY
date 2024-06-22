@@ -1,5 +1,6 @@
 package org.example.apisimple_dy.controller;
 
+import io.micrometer.core.annotation.Timed;
 import org.example.apisimple_dy.commonIO.Result;
 import org.example.apisimple_dy.entity.Browse;
 import org.example.apisimple_dy.entity.Video;
@@ -14,6 +15,7 @@ public class BrowseController {
     @Autowired
     private BrowseService browseService;
 
+    @Timed(value = "browseController.post")
     @PostMapping("/putLikes")
     public Result<?> putLikes(@RequestBody Video video, @RequestParam("userID") Integer userID){
         if (video.getVideoID() == null){
@@ -32,6 +34,7 @@ public class BrowseController {
         }
     }
 
+    @Timed(value = "browseController.get")
     @GetMapping("/videoCommand")
     public Result<?> getCommandVideos(@RequestParam("userID") Integer userID){
         try {
@@ -41,6 +44,7 @@ public class BrowseController {
         }
     }
 
+    @Timed(value = "browseController.post")
     @PostMapping("/videoBrowse")
     public Result<?> videoBrowse(@RequestBody Browse browse){
         if (browse.getVideoID() == null){

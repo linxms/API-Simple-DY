@@ -2,6 +2,7 @@ package org.example.apisimple_dy.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.micrometer.core.annotation.Timed;
 import org.example.apisimple_dy.commonIO.Result;
 import org.example.apisimple_dy.entity.Video;
 import org.example.apisimple_dy.service.VideoService;
@@ -17,6 +18,7 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
+    @Timed(value = "videoController.post")
     @PostMapping("/addVideo")
     public Result<?> addVideo(@RequestBody MultipartFile videoFile, @RequestBody Video video){
         if (video.getAuthorID() == null){
@@ -30,6 +32,7 @@ public class VideoController {
         }
     }
 
+    @Timed(value = "videoController.get")
     @GetMapping("/pageGetVideo")
     public Result<?> getVideo(@RequestParam("pageNum") Integer pageNum,
                               @RequestParam("pageSize") Integer pageSize,
@@ -43,6 +46,7 @@ public class VideoController {
         }
     }
 
+    @Timed(value = "videoController.delete")
     @DeleteMapping("/deleteVideo")
     public Result<?> deleteVideo(@RequestParam("authorID") Integer authorID, @RequestParam("videoID") Integer videoID){
         try {
