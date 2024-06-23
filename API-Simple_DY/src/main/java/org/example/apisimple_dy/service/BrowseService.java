@@ -9,7 +9,7 @@ import org.example.apisimple_dy.entity.Video;
 import java.util.List;
 
 public interface BrowseService extends IService<Browse> {
-    public int likesOn(Video video, Integer userID);
+    public int likesOn(Integer videoID, Integer userID);
 
     public List<Video> videoCommand(Integer userID);
 

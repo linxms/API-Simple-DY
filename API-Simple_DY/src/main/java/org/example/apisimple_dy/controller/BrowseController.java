@@ -19,8 +19,8 @@ public class BrowseController {
     private JWTUtil jwtUtil;
     @Timed(value = "browseController.post")
     @PostMapping("/putLikes")
-    public Result<?> putLikes(@RequestHeader("Authorization") String token, @RequestBody Video video, @RequestParam("userID") Integer userID){
-        if (video.getVideoID() == null){
+    public Result<?> putLikes(@RequestHeader("Authorization") String token, @RequestParam("videoID") Integer videoID, @RequestParam("userID") Integer userID){
+        if (videoID == null){
             throw new RuntimeException("数据不能为空");
         }
         try {
@@ -28,7 +28,7 @@ public class BrowseController {
             if (!userID.equals(tokenUserID)) {
                 return Result.fail("用户ID不匹配");
             }
-            int result = browseService.likesOn(video, userID);
+            int result = browseService.likesOn(videoID, userID);
             if (result == 1){
                 return Result.success();
             }else if (result == 2){

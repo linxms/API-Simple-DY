@@ -1,10 +1,7 @@
 package org.example.apisimple_dy.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.example.apisimple_dy.entity.Browse;
 import org.example.apisimple_dy.entity.Video;
 
@@ -20,6 +17,10 @@ public interface BrowseMapper extends BaseMapper<Browse> {
 
     @Select("select isLiked from browse where #{videoID} and userID = #{userID}")
     int findVideoIsLiked(Integer videoID, Integer userID);
+
+    @Update("update browse set isLiked = isLiked + 1 where videoID = #{videoID} and userID = #{userID}")
+    int putIsLiked(Integer videoID, Integer userID);
+
 
     @Delete("DELETE FROM browse WHERE videoID = #{videoID}")
     int deleteBrowseByVideoId(Integer videoID);

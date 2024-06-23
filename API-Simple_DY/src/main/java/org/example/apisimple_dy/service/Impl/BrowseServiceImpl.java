@@ -27,14 +27,15 @@ public class BrowseServiceImpl extends ServiceImpl<BrowseMapper, Browse> impleme
         this.videoMapper = videoMapper;
     }
     @Override
-    public int likesOn(Video video, Integer userID) {
+    public int likesOn(Integer videoID, Integer userID) {
         try {
-            int islike = this.baseMapper.findVideoIsLiked(video.getVideoID(), userID);
+            int islike = this.baseMapper.findVideoIsLiked(videoID, userID);
             if (islike > 0){
                 return 2; //视频已点赞
             }
-            int i = videoMapper.incrementLikes(video.getVideoID());
-            if (i > 0){
+            int i = videoMapper.incrementLikes(videoID);
+            int putIsLike = this.browseMapper.putIsLiked(videoID, userID);
+            if (i > 0 && putIsLike > 0){
                 return i; // 点赞成功
             }else {
                 throw new RuntimeException("更新异常");
