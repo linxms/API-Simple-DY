@@ -36,10 +36,10 @@ public class VideoController {
     @GetMapping("/pageGetVideo")
     public Result<?> getVideo(@RequestParam("pageNum") Integer pageNum,
                               @RequestParam("pageSize") Integer pageSize,
-                              @RequestBody Video video){
+                              @RequestParam("authorID") Integer authorID){
         try {
             Page<Video> page = new Page<>(pageNum, pageSize);
-            IPage<Video> videoIPage = videoService.selectMyVideo(page, video.getAuthorID());
+            IPage<Video> videoIPage = videoService.selectMyVideo(page, authorID);
             return Result.success(videoIPage);
         } catch (Exception e) {
             return Result.fail(e.getMessage());
