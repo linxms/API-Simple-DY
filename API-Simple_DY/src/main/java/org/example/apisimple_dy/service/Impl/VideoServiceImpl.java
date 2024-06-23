@@ -12,6 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements VideoService {
@@ -21,11 +25,11 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
     }
     @Override
-    public boolean videoUpload(MultipartFile uploadFile, Video video) throws IOException {
+    public boolean videoUpload(String sourcePath, String videoName, Video video) throws IOException {
 
-        if (uploadFile.isEmpty()){
-            throw new RuntimeException("上传文件不能为空");
-        }
+//        if (uploadFile.isEmpty()){
+//            throw new RuntimeException("上传文件不能为空");
+//        }
         String dirPath = "C:\\Users\\林\\Desktop\\大三下\\Api\\第4次作业-简易抖音\\Videos\\" +
                             video.getAuthorID().toString();
 
@@ -35,25 +39,31 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
             dir.mkdirs();
         }
 
-        try {
-            String videoName = uploadFile.getOriginalFilename();
+        Path sourceVideo = Paths.get(sourcePath);
+        // 目标文件路径
+        Path targetPath = Paths.get(dirPath + "\\" + videoName);
 
+
+        try {
+            // 移动文件到目标位置（如果目标文件已存在，则覆盖）
+            Files.move(sourceVideo, targetPath, StandardCopyOption.REPLACE_EXISTING);
             File videoServer = new File(dir, videoName);
 
             //System.out.println("真实路径：" + fileServer.getAbsolutePath());
 
-            uploadFile.transferTo(videoServer);
 
             video.setVideoPath(videoServer.getAbsolutePath());
+            System.out.println(video.getVideoPath());
             int videoNum = this.baseMapper.getFIleNum(video.getAuthorID(), videoServer.getAbsolutePath());
 
             if (videoNum == 0){
                 save(video);
+                System.out.println("文件移动成功！");
                 return true;
             } else {
                 throw new RuntimeException("本视频已经存在");
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }

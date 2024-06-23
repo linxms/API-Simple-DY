@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface VideoMapper extends BaseMapper<Video> {
 
-    @Select("select count(*) from video where authorID = #{authorID} and file_location = #{filePath}")
+    @Select("select count(*) from video where authorID = #{authorID} and videoPath = #{filePath}")
     int getFIleNum(Integer authorID, String filePath);
 
     @Select("select * from video order by likes DESC ")

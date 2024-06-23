@@ -8,6 +8,7 @@ import org.example.apisimple_dy.config.JWTUtil;
 import org.example.apisimple_dy.entity.User;
 import org.example.apisimple_dy.mapper.UserMapper;
 import org.example.apisimple_dy.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,7 +17,9 @@ import java.util.Map;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-    JWTUtil jwtUtil;
+
+    @Autowired
+    private JWTUtil jwtUtil;
     public UserServiceImpl(UserMapper userMapper){
         this.baseMapper = userMapper;
     }
@@ -27,7 +30,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
             if (loginUser == null){
                 throw new RuntimeException("该用户不存在");
-            } else if (user.getPassword() != loginUser.getPassword()){
+            } else if (!user.getPassword().equals(loginUser.getPassword()) ){
                 throw new RuntimeException("密码错误，请重新输入");
             } else {
                 Map<String, Object> tokenClaim = new HashMap<>();

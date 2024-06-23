@@ -2,6 +2,7 @@ package org.example.apisimple_dy.controller;
 
 import io.micrometer.core.annotation.Timed;
 import org.example.apisimple_dy.commonIO.Result;
+import org.example.apisimple_dy.config.JWTUtil;
 import org.example.apisimple_dy.entity.Browse;
 import org.example.apisimple_dy.entity.Video;
 import org.example.apisimple_dy.service.BrowseService;
@@ -15,13 +16,18 @@ public class BrowseController {
     @Autowired
     private BrowseService browseService;
 
+    private JWTUtil jwtUtil;
     @Timed(value = "browseController.post")
     @PostMapping("/putLikes")
-    public Result<?> putLikes(@RequestBody Video video, @RequestParam("userID") Integer userID){
+    public Result<?> putLikes(@RequestHeader("Authorization") String token, @RequestBody Video video, @RequestParam("userID") Integer userID){
         if (video.getVideoID() == null){
             throw new RuntimeException("数据不能为空");
         }
         try {
+            Integer tokenUserID = jwtUtil.getUserIdFromToken(token);
+            if (!userID.equals(tokenUserID)) {
+                return Result.fail("用户ID不匹配");
+            }
             int result = browseService.likesOn(video, userID);
             if (result == 1){
                 return Result.success();

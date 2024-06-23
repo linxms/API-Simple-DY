@@ -58,7 +58,7 @@ public class ChatController {
         headers.set("Authorization", "Bearer " + API_KEY);
 
         JSONObject paramMap = new JSONObject();
-        paramMap.put("model", "gpt-3.5-turbo-0125");
+        paramMap.put("model", "gpt-3.5-turbo");
 
         JSONArray messagesArray = new JSONArray();
 

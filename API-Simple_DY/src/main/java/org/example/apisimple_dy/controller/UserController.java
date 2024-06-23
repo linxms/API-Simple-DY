@@ -46,6 +46,7 @@ public class UserController {
     public Result<?> login(@RequestBody User user) {
         try {
             Map<String, Object> data = userService.login(user);
+            System.out.println(data);
             return Result.success(data);
         } catch (Exception e) {
             return Result.fail(e.getMessage());
