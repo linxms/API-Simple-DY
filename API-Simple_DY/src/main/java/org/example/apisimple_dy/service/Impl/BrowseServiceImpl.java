@@ -19,9 +19,12 @@ import java.util.List;
 @Service
 public class BrowseServiceImpl extends ServiceImpl<BrowseMapper, Browse> implements BrowseService{
 
-    private VideoMapper videoMapper;
-    public BrowseServiceImpl(BrowseMapper browseMapper){
-        this.baseMapper = browseMapper;
+    private final BrowseMapper browseMapper;
+    private final VideoMapper videoMapper;
+
+    public BrowseServiceImpl(BrowseMapper browseMapper, VideoMapper videoMapper) {
+        this.browseMapper = browseMapper;
+        this.videoMapper = videoMapper;
     }
     @Override
     public int likesOn(Video video, Integer userID) {
@@ -50,7 +53,7 @@ public class BrowseServiceImpl extends ServiceImpl<BrowseMapper, Browse> impleme
                 throw new RuntimeException("获取视频错误");
             }
 
-            List<Integer> browses = this.baseMapper.findBrowsedVideo(userID);
+            List<Integer> browses = browseMapper.findBrowsedVideo(userID);
             
             Iterator<Video> videoIterator = videos.iterator();
             Iterator<Integer> browseIterator = browses.iterator();
