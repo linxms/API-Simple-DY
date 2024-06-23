@@ -2,6 +2,7 @@ package org.example.apisimple_dy.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.function.Function;
 
 public class JWTUtil {
 
-    private final String secretKey = "API_SIMPLE_DY"; // 请使用更安全的密钥
+    private static final String secretKey = "API_SIMPLE_DY"; // 请使用更安全的密钥
 
     // 生成Token的详细方法
     public String doGenerateToken(Map<String, Object> claims, Integer userID) {
@@ -26,11 +27,21 @@ public class JWTUtil {
     }
 
     // 验证Token
-    public Boolean validateToken(String token, String username) {
-        final String tokenUsername = getUsernameFromToken(token);
-        return (tokenUsername.equals(username) && !isTokenExpired(token));
+    public Boolean validateToken(String token, String userName) {
+        final String tokenUserName = getUsernameFromToken(token);
+        return (tokenUserName.equals(userName) && !isTokenExpired(token));
     }
 
+    public static Claims parseToken(String token) throws SignatureException {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+    public static Integer getUserIdFromToken(String token) throws SignatureException {
+        Claims claims = parseToken(token);
+        return Integer.parseInt(claims.getSubject());
+    }
     // 从Token中获取用户名
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
