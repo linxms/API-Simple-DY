@@ -8,13 +8,15 @@ import lombok.Setter;
 @Setter
 @Data
 public class Video {
-    @TableId(value = "videoID")
+    @TableField(value = "videoID")
     private Integer videoID;
 
+    @TableField(value = "authorID")
     private Integer authorID;
 
     private String content;
 
+    @TableField(value = "videoPath")
     private String videoPath;
 
     private Integer likes;

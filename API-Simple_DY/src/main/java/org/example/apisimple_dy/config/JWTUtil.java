@@ -3,17 +3,20 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 
+@Component
 public class JWTUtil {
 
-    private static final String secretKey = "API_SIMPLE_DY"; // 请使用更安全的密钥
+    private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512); // 请使用更安全的密钥
 
     // 生成Token的详细方法
     public String doGenerateToken(Map<String, Object> claims, Integer userID) {

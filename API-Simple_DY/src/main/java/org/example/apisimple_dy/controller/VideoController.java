@@ -20,12 +20,12 @@ public class VideoController {
 
     @Timed(value = "videoController.post")
     @PostMapping("/addVideo")
-    public Result<?> addVideo(@RequestBody MultipartFile videoFile, @RequestBody Video video){
+    public Result<?> addVideo(@RequestParam("sourcePath") String sourcePath, @RequestParam("videoName") String videoName, @RequestBody Video video){
         if (video.getAuthorID() == null){
             throw new RuntimeException("数据不能为空");
         }
         try {
-            videoService.videoUpload(videoFile, video);
+            videoService.videoUpload(sourcePath, videoName, video);
             return Result.success();
         } catch (RuntimeException | IOException e) {
             return Result.fail(e.getMessage());
