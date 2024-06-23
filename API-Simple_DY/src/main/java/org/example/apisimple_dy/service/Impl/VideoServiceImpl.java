@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.apisimple_dy.entity.Video;
+import org.example.apisimple_dy.mapper.BrowseMapper;
 import org.example.apisimple_dy.mapper.VideoMapper;
 import org.example.apisimple_dy.service.VideoService;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,11 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements VideoService {
 
-    public VideoServiceImpl(VideoMapper videoMapper){
-        this.baseMapper = videoMapper;
+    private final BrowseMapper browseMapper;
 
+    public VideoServiceImpl(VideoMapper videoMapper, BrowseMapper browseMapper){
+        this.baseMapper = videoMapper;
+        this.browseMapper = browseMapper;
     }
     @Override
     public boolean videoUpload(String sourcePath, String videoName, Video video) throws IOException {
@@ -71,6 +74,12 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     @Override
     public boolean deleteVideo(Integer userID, Integer videoID) {
         try {
+            // 先删除 browse 表中的记录
+            int deleteBrowseCount = browseMapper.deleteBrowseByVideoId(videoID);
+            if (deleteBrowseCount < 1) {
+                throw new RuntimeException("删除 browse 表中的记录失败");
+            }
+
             if (this.baseMapper.selectById(videoID).getAuthorID().equals(userID)){
                 int result = this.baseMapper.deleteById(videoID);
 

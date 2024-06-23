@@ -22,6 +22,9 @@ public class Video {
     private Integer likes;
 
     private String title;
+    public Video() {
+        // 默认构造函数
+    }
 
     public Video(Integer authorID, String videoPath){
         this.authorID = authorID;
