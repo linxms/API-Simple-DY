@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class Video {
-    @TableField(value = "videoID")
+    @TableId(value = "videoID")
     private Integer videoID;
 
     @TableField(value = "authorID")
